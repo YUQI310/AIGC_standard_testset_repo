@@ -18,3 +18,10 @@ The logs are used for:
 ## Repository status
 This repository currently includes the log directory as a placeholder only.
 Actual logs will be generated after the local pipeline is executed on downloaded datasets.
+# Log Outputs
+Expected log outputs include:
+- `pipeline.log`
+- `error.log`
+- `warning.log`
+
+This repository currently keeps structure placeholders only.
