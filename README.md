@@ -53,42 +53,26 @@
 - `isolated_corrupted`
 - `rejected`
 - `sampled_for_label_review`
-
-## 说明
-本仓库当前以项目结构、配置设计、处理流程和标准化输出规范为主，作为第二阶段“公开
-## Current Progress
-
-Current repository progress:
-- repository folder structure has been created
-- raw-data placeholder directories for target datasets have been added
-- dataset registration config has been drafted in `config/datasets_config.yaml`
-- compliance-routing and metadata-planning documents have been added under `docs/`
-- core script placeholders have been created under `src/`
-- report and log directories have been reserved as pipeline output locations
-
-At the current stage, this repository mainly presents the project’s pipeline design, compliance-triage structure, configuration layout, and documentation framework.
-Actual dataset downloading, local conversion, metadata generation, and report output are expected to be executed locally rather than inside this GitHub repository.
-
-## Scope
-
-This repository is intended to demonstrate:
-- how public datasets are registered and organized before processing
-- how different datasets are routed based on license and review status
-- how processed outputs are expected to be separated into candidate, pending-review, and isolation paths
-- how metadata, reports, and logs are structurally planned for later stages
-
-This repository is not intended to:
-- redistribute raw datasets
-- provide full processed dataset outputs
-- serve as a production-ready data processing platform
-- replace local execution environments required for actual conversion and validation
-## Note on Repository Adaptation
-This repository is a structured implementation skeleton derived from the original
-script design document, which describes the dataset configuration as
-`config/datasets_config.json`.
-For readability and maintenance, the repository uses
-`config/datasets_config.yaml` instead. Some routing paths and directory mappings
-are repository implementation choices based on the documented workflow, rather
-than a claim of verbatim reconstruction of the original script files.
-
-
+  ## 当前进展
+当前仓库已完成以下内容：
+已建立仓库的基础目录结构
+已为目标数据集添加原始数据占位目录
+已在 config/datasets_config.yaml 中完成数据集注册配置草案
+已在 docs/ 目录下补充合规分流与元数据规划文档
+已在 src/ 目录下创建核心脚本占位文件
+已预留报告与日志目录，作为后续流程输出位置
+在当前阶段，本仓库主要展示项目的流程设计、合规分流结构、配置布局和文档框架。
+实际的数据集下载、本地格式转换、元数据生成和报告输出，预计在本地环境中执行，而不是直接在 GitHub 仓库内完成。
+## 仓库范围
+本仓库主要用于展示以下内容：
+公共数据集在处理前如何进行注册与组织
+不同数据集如何依据许可状态和复核状态进行分流
+处理后输出如何在 candidate、pending-review 和 isolation 路径中分开存放
+元数据、报告和日志在后续阶段的结构化规划方式
+本仓库不用于：
+重新分发原始数据集
+提供完整的处理后数据输出
+作为可直接投入使用的生产级数据处理平台
+替代实际格式转换与验证所需的本地运行环境
+## 仓库适配说明
+本仓库是在原始脚本设计文档基础上整理形成的结构化实现骨架。原文中配置文件写作 config/datasets_config.json，为便于展示与维护，仓库中采用 config/datasets_config.yaml 进行适配保存。部分分流路径与目录映射属于基于文档流程整理后的仓库实现表达，并非声称对原始脚本文件进行逐字复刻。
