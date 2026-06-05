@@ -28,3 +28,9 @@ def load_dataset_registry():
 
 if __name__ == "__main__":
     print(json.dumps(load_dataset_registry(), ensure_ascii=False, indent=2))
+"""
+Configuration loader for repository-adapted dataset settings.
+
+The original document refers to datasets_config.json.
+This repository stores the configuration in YAML format for readability.
+"""
