@@ -41,48 +41,102 @@ GenImage:
     remove_near_solid: true
 
 DFDC:
+ type: video
+  category: video
+  source: kaggle
+  source_path: https://www.kaggle.com/c/deepfake-detection-challenge
+  download_method: kaggle_api
   raw_path: 01_raw_data/DFDC/
   output_path: 02_processed/isolation/license/video/DFDC/
+  license_type: kaggle_competition_rules
   commercial_use: unknown
   redistribution: forbidden
+  pool_assignment: isolation
+  isolation_reason: commercial rights not verifiable from currently accessible official channels
+  review_status: pending
   cleaning_rules:
     min_duration_sec: 3
     min_short_edge: 224
+    remove_corrupted: true
 
 FaceForensics++:
+   type: video
+  category: video
+  source: official_request
+  source_path: https://github.com/ondyari/FaceForensics
+  download_method: official_request
   raw_path: 01_raw_data/FaceForensics++/
   output_path: 02_processed/isolation/license/video/FaceForensics++/
   code_license: MIT
   data_license: official_access_terms
   commercial_use: forbidden
   redistribution: restricted
+  pool_assignment: isolation
+  isolation_reason: non-commercial research and educational purposes only
+  review_status: rejected
   cleaning_rules:
     min_duration_sec: 3
     min_short_edge: 224
+    remove_corrupted: true
 
 Celeb-DF:
+  type: video
+  category: video
+  source: github
+  source_path: https://github.com/yuezunli/celeb-deepfakeforensics
+  download_method: form_application
   raw_path: 01_raw_data/Celeb-DF/
   output_path: 02_processed/isolation/license/video/Celeb-DF/
+  license_type: custom_research_only
   commercial_use: forbidden
   redistribution: forbidden
+  requires_academic_email: true
+  pool_assignment: isolation
+  isolation_reason: non-commercial research only; redistribution forbidden
+  review_status: rejected
   cleaning_rules:
     min_duration_sec: 3
     min_short_edge: 224
+    remove_corrupted: true
 
 FakeAVCeleb:
+  type: multimodal
+  category: video
+  source: github
+  source_path: https://github.com/
+  download_method: form_application
   raw_path: 01_raw_data/FakeAVCeleb/
   output_path: 02_processed/isolation/license/video/FakeAVCeleb/
+  license_type: custom_research_only
   commercial_use: forbidden
   redistribution: forbidden
+  requires_academic_email: true
+  pool_assignment: isolation
+  isolation_reason: non-commercial research and education only; redistribution forbidden
+  review_status: rejected
   cleaning_rules:
     min_duration_sec: 3
     min_short_edge: 224
+    remove_corrupted: true
 
 DeeperForensics-1.0:
+  type: video
+  category: video
+  source: github
+  source_path: https://github.com/EndlessSora/DeeperForensics-1.0
+  download_method: manual_eula_application
   raw_path: 01_raw_data/DeeperForensics-1.0/
   output_path: 02_processed/isolation/license/video/DeeperForensics-1.0/
+  code_license: MIT
+  data_license: non-commercial_research
   commercial_use: forbidden
+  redistribution: forbidden
+  pool_assignment: isolation
+  isolation_reason: dataset use limited to non-commercial research purposes
+  review_status: rejected
   cleaning_rules:
     min_duration_sec: 3
     min_short_edge: 224
+    remove_corrupted: true
+
 
