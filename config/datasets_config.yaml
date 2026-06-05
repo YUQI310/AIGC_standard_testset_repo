@@ -1,75 +1,143 @@
-datasets:
-  - name: "HC3"
-    modality: "text"
-    source: "huggingface"
-    raw_path: "01_raw_data/HC3/"
-    output_path: "02_processed/pending_review/text/HC3/"
-    license_type: "CC-BY-SA-4.0"
-    license_source: "https://huggingface.co/datasets/Hello-SimpleAI/HC3"
-    commercial_use: "restricted"
-    redistribution: "restricted"
-    derivative_obligation: "share_alike"
-    pool_assignment: "pending_review"
-    review_status: "pending"
-    restriction_cleared: false
+HC3:
+  type: text
+  category: text
+  source: huggingface
+  source_path: Hello-SimpleAI/HC3
+  download_method: huggingface_hub
+  raw_path: 01_raw_data/HC3/
+  output_path: 02_processed/pending_review/text/HC3/
+  license_type: CC-BY-SA-4.0
+  license_source: https://huggingface.co/datasets/Hello-SimpleAI/HC3
+  commercial_use: restricted
+  redistribution: restricted
+  derivative_obligation: share_alike
+  pool_assignment: pending_review
+  review_status: pending
+  restriction_cleared: false
+  cleaning_rules:
+    min_text_length_zh: 5
+    min_text_tokens_en: 3
+    remove_blank_text: true
+    remove_duplicate_text: true
+  label_mapping:
+    human: human_written
+    chatgpt: ai_generated
 
-  - name: "GenImage"
-    modality: "image"
-    source: "github"
-    raw_path: "01_raw_data/GenImage/"
-    output_path: "02_processed/isolation/license/image/GenImage/"
-    license_type: "CC-BY-NC-SA-4.0 + dataset_terms"
-    commercial_use: "forbidden"
-    redistribution: "restricted"
-    derivative_obligation: "non_commercial+share_alike"
-    pool_assignment: "isolation"
-    isolation_reason: "non-commercial only"
-    review_status: "rejected"
+GenImage:
+  type: image
+  category: image
+  source: github
+  source_path: https://github.com/
+  download_method: git_clone
+  raw_path: 01_raw_data/GenImage/
+  output_path: 02_processed/isolation/license/image/GenImage/
+  license_type: CC-BY-NC-SA-4.0 + dataset_terms
+  commercial_use: forbidden
+  redistribution: restricted
+  derivative_obligation: non_commercial+share_alike
+  pool_assignment: isolation
+  isolation_reason: non-commercial only
+  review_status: rejected
+  cleaning_rules:
+    min_short_edge: 224
+    remove_corrupted: true
+    remove_near_solid: true
 
-  - name: "DFDC"
-    modality: "video"
-    source: "kaggle"
-    raw_path: "01_raw_data/DFDC/"
-    output_path: "02_processed/isolation/license/video/DFDC/"
-    license_type: "competition terms"
-    commercial_use: "unknown"
-    redistribution: "forbidden"
-    pool_assignment: "isolation"
-    isolation_reason: "license unclear"
-    review_status: "pending"
+DFDC:
+  type: video
+  category: video
+  source: kaggle
+  source_path: https://www.kaggle.com/c/deepfake-detection-challenge
+  download_method: kaggle_api
+  raw_path: 01_raw_data/DFDC/
+  output_path: 02_processed/isolation/license/video/DFDC/
+  license_type: kaggle_competition_rules
+  commercial_use: unknown
+  redistribution: forbidden
+  pool_assignment: isolation
+  isolation_reason: commercial rights not verifiable from currently accessible official channels
+  review_status: pending
+  cleaning_rules:
+    min_duration_sec: 3
+    min_short_edge: 224
+    remove_corrupted: true
 
-  - name: "FaceForensics++"
-    modality: "video"
-    source: "official_site"
-    raw_path: "01_raw_data/FaceForensics++/"
-    output_path: "02_processed/isolation/license/video/FaceForensics++/"
-    license_type: "non-commercial research only"
-    commercial_use: "forbidden"
-    redistribution: "restricted"
-    pool_assignment: "isolation"
-    isolation_reason: "non-commercial only"
-    review_status: "rejected"
+FaceForensics++:
+  type: video
+  category: video
+  source: official_request
+  source_path: https://github.com/ondyari/FaceForensics
+  download_method: official_request
+  raw_path: 01_raw_data/FaceForensics++/
+  output_path: 02_processed/isolation/license/video/FaceForensics++/
+  code_license: MIT
+  data_license: official_access_terms
+  commercial_use: forbidden
+  redistribution: restricted
+  pool_assignment: isolation
+  isolation_reason: non-commercial research and educational purposes only
+  review_status: rejected
+  cleaning_rules:
+    min_duration_sec: 3
+    min_short_edge: 224
+    remove_corrupted: true
 
-  - name: "Celeb-DF"
-    modality: "video"
-    source: "github"
-    raw_path: "01_raw_data/Celeb-DF/"
-    output_path: "02_processed/isolation/license/video/Celeb-DF/"
-    license_type: "non-commercial research only"
-    commercial_use: "forbidden"
-    redistribution: "forbidden"
-    pool_assignment: "isolation"
-    isolation_reason: "non-commercial only"
-    review_status: "rejected"
+Celeb-DF:
+  type: video
+  category: video
+  source: github
+  source_path: https://github.com/yuezunli/celeb-deepfakeforensics
+  download_method: form_application
+  raw_path: 01_raw_data/Celeb-DF/
+  output_path: 02_processed/isolation/license/video/Celeb-DF/
+  license_type: custom_research_only
+  commercial_use: forbidden
+  redistribution: forbidden
+  requires_academic_email: true
+  pool_assignment: isolation
+  isolation_reason: non-commercial research only; redistribution forbidden
+  review_status: rejected
+  cleaning_rules:
+    min_duration_sec: 3
+    min_short_edge: 224
+    remove_corrupted: true
 
-  - name: "FakeAVCeleb"
-    modality: "video"
-    source: "github"
-    raw_path: "01_raw_data/FakeAVCeleb/"
-    output_path: "02_processed/isolation/license/video/FakeAVCeleb/"
-    license_type: "non-commercial research and education only"
-    commercial_use: "forbidden"
-    redistribution: "forbidden"
-    pool_assignment: "isolation"
-    isolation_reason: "non-commercial only"
-    review_status: "rejected"
+FakeAVCeleb:
+  type: multimodal
+  category: video
+  source: github
+  source_path: https://github.com/
+  download_method: form_application
+  raw_path: 01_raw_data/FakeAVCeleb/
+  output_path: 02_processed/isolation/license/video/FakeAVCeleb/
+  license_type: custom_research_only
+  commercial_use: forbidden
+  redistribution: forbidden
+  requires_academic_email: true
+  pool_assignment: isolation
+  isolation_reason: non-commercial research and education only; redistribution forbidden
+  review_status: rejected
+  cleaning_rules:
+    min_duration_sec: 3
+    min_short_edge: 224
+    remove_corrupted: true
+
+DeeperForensics-1.0:
+  type: video
+  category: video
+  source: github
+  source_path: https://github.com/EndlessSora/DeeperForensics-1.0
+  download_method: manual_eula_application
+  raw_path: 01_raw_data/DeeperForensics-1.0/
+  output_path: 02_processed/isolation/license/video/DeeperForensics-1.0/
+  code_license: MIT
+  data_license: non-commercial_research
+  commercial_use: forbidden
+  redistribution: forbidden
+  pool_assignment: isolation
+  isolation_reason: dataset use limited to non-commercial research purposes
+  review_status: rejected
+  cleaning_rules:
+    min_duration_sec: 3
+    min_short_edge: 224
+    remove_corrupted: true
