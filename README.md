@@ -64,6 +64,7 @@
 - Config loader and utility helper scripts added
 - Example metadata, processing summary, and review sample list prepared
 - License triage notes documented for first-round datasets
+- Processed data directories aligned with documented status flow
 ## Current Scope
 This repository currently provides:
 - project structure design
@@ -72,6 +73,7 @@ This repository currently provides:
 - metadata schema definition
 - placeholder scripts for workflow demonstration
 - example output files for review and reporting
+- directory layout aligned with dataset processing states
 This version is intended as a prototype repository for the second-stage dataset processing and validation workflow.
 
 
