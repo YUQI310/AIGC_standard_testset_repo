@@ -1,6 +1,7 @@
-def main():
-    print("AIGC standard testset pipeline placeholder")
-    print("Steps: config loading -> normalization -> metadata -> validation -> routing -> reports")
+"""
+Main pipeline entry for dataset ingestion, conversion, cleaning,
+compliance routing, review sampling, and reporting.
 
-if __name__ == "__main__":
-    main()
+This file is a repository skeleton aligned with the documented
+modular script design.
+"""
