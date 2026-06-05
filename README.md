@@ -57,23 +57,30 @@
 ## 说明
 本仓库当前以项目结构、配置设计、处理流程和标准化输出规范为主，作为第二阶段“公开
 ## Current Progress
-- Repository structure initialized
-- Core configuration files created
-- Pipeline design and metadata schema documented
-- Placeholder scripts added for main flow and compliance routing
-- Config loader and utility helper scripts added
-- Example metadata, processing summary, and review sample list prepared
-- License triage notes documented for first-round datasets
-- Processed data directories aligned with documented status flow
-## Current Scope
-This repository currently provides:
-- project structure design
-- configuration examples
-- pipeline documentation
-- metadata schema definition
-- placeholder scripts for workflow demonstration
-- example output files for review and reporting
-- directory layout aligned with dataset processing states
-This version is intended as a prototype repository for the second-stage dataset processing and validation workflow.
+
+Current repository progress:
+- repository folder structure has been created
+- raw-data placeholder directories for target datasets have been added
+- dataset registration config has been drafted in `config/datasets_config.yaml`
+- compliance-routing and metadata-planning documents have been added under `docs/`
+- core script placeholders have been created under `src/`
+- report and log directories have been reserved as pipeline output locations
+
+At the current stage, this repository mainly presents the project’s pipeline design, compliance-triage structure, configuration layout, and documentation framework.
+Actual dataset downloading, local conversion, metadata generation, and report output are expected to be executed locally rather than inside this GitHub repository.
+
+## Scope
+
+This repository is intended to demonstrate:
+- how public datasets are registered and organized before processing
+- how different datasets are routed based on license and review status
+- how processed outputs are expected to be separated into candidate, pending-review, and isolation paths
+- how metadata, reports, and logs are structurally planned for later stages
+
+This repository is not intended to:
+- redistribute raw datasets
+- provide full processed dataset outputs
+- serve as a production-ready data processing platform
+- replace local execution environments required for actual conversion and validation
 
 
