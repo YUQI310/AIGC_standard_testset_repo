@@ -23,3 +23,16 @@ The metadata files are intended to record:
 ## Repository status
 Current files in this directory are placeholders for schema demonstration and repository completeness.
 They do not represent actual pipeline outputs yet.
+# Metadata Outputs
+
+Expected metadata outputs include:
+- `text_metadata.jsonl`
+- `image_metadata.jsonl`
+- `video_metadata.jsonl`
+
+Additional subdirectories may be used for:
+- `manifest/`
+- `review_logs/`
+- `license_reports/`
+
+This repository currently keeps structure placeholders only.
