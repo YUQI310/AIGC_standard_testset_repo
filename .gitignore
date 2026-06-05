@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db
+
+01_raw_data/*
+02_processed/*
+03_metadata/*
+04_reports/*
+05_logs/*
+
+!01_raw_data/.gitkeep
+!02_processed/**/.gitkeep
+!03_metadata/.gitkeep
+!04_reports/.gitkeep
+!05_logs/.gitkeep
