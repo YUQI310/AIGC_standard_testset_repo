@@ -18,3 +18,12 @@ Actual report files are not included yet because the full processing pipeline ha
 Reports are separated from runtime logs:
 - `04_reports/` stores conclusion-oriented outputs for review and delivery
 - `05_logs/` stores execution details for debugging and traceability
+# Report Outputs
+Expected report outputs include:
+- `processing_summary.json`
+- `filter_reason_stats.csv`
+- `license_distribution.csv`
+- `dataset_level_report.csv`
+- `quality_verification_report.md`
+
+This repository currently keeps structure placeholders only.
