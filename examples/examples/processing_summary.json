@@ -1,0 +1,13 @@
+{
+  "project": "AIGC Standard Testset",
+  "batch_id": "batch_20260605_001",
+  "total_records": 1000,
+  "normalized_records": 920,
+  "validated_records": 880,
+  "candidate_pool_records": 300,
+  "pending_review_records": 120,
+  "isolated_license_records": 500,
+  "isolated_compliance_records": 20,
+  "isolated_corrupted_records": 60,
+  "rejected_records": 0
+}
