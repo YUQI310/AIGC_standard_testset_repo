@@ -82,5 +82,13 @@ This repository is not intended to:
 - provide full processed dataset outputs
 - serve as a production-ready data processing platform
 - replace local execution environments required for actual conversion and validation
+## Note on Repository Adaptation
+This repository is a structured implementation skeleton derived from the original
+script design document, which describes the dataset configuration as
+`config/datasets_config.json`.
+For readability and maintenance, the repository uses
+`config/datasets_config.yaml` instead. Some routing paths and directory mappings
+are repository implementation choices based on the documented workflow, rather
+than a claim of verbatim reconstruction of the original script files.
 
 
