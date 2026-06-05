@@ -1,0 +1,26 @@
+project_name: "AIGC Standard Testset Repository"
+
+paths:
+  raw_root: "01_raw_data"
+  processed_root: "02_processed"
+  metadata_root: "03_metadata"
+  reports_root: "04_reports"
+  logs_root: "05_logs"
+
+processing:
+  review_sample_ratio: 0.1
+  random_seed: 42
+  enable_deduplication: true
+  enable_content_risk_screening: true
+
+metadata:
+  output_file: "03_metadata/all_samples.jsonl"
+  review_queue_file: "03_metadata/review_queue.jsonl"
+
+reports:
+  summary_file: "04_reports/processing_summary.json"
+  review_sampling_file: "04_reports/review_sample_list.csv"
+
+runtime:
+  processor_version: "v1.0.0"
+  default_record_status: "ingested"
