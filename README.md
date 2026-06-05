@@ -56,3 +56,22 @@
 
 ## 说明
 本仓库当前以项目结构、配置设计、处理流程和标准化输出规范为主，作为第二阶段“公开
+## Current Progress
+- Repository structure initialized
+- Core configuration files created
+- Pipeline design and metadata schema documented
+- Placeholder scripts added for main flow and compliance routing
+- Config loader and utility helper scripts added
+- Example metadata, processing summary, and review sample list prepared
+- License triage notes documented for first-round datasets
+## Current Scope
+This repository currently provides:
+- project structure design
+- configuration examples
+- pipeline documentation
+- metadata schema definition
+- placeholder scripts for workflow demonstration
+- example output files for review and reporting
+This version is intended as a prototype repository for the second-stage dataset processing and validation workflow.
+
+
