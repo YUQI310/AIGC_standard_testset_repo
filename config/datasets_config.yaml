@@ -1,0 +1,98 @@
+ # Repository-adapted YAML configuration based on the original script design
+# documented as datasets_config.json.
+# Fields retained here are limited to items that are confirmed from the original
+# document or can be directly supported by dataset source/license pages.
+# Some output paths are repository implementation mappings rather than verbatim
+# original configuration lines.
+
+HC3:
+  type: text
+  category: text
+  source: huggingface
+  source_path: Hello-SimpleAI/HC3
+  download_method: huggingface_hub
+  raw_path: 01_raw_data/HC3/
+  output_path: 02_processed/pending_review/text/HC3/
+  license_type: CC-BY-SA-4.0
+  license_source: https://huggingface.co/datasets/Hello-SimpleAI/HC3
+  commercial_use: restricted
+  redistribution: restricted
+  derivative_obligation: share_alike
+  cleaning_rules:
+    min_text_length_zh: 5
+    min_text_tokens_en: 3
+    remove_blank_text: true
+    remove_duplicate_text: true
+  label_mapping:
+    human: human_written
+    chatgpt: ai_generated
+
+GenImage:
+  type: image
+  category: image
+  source: github
+  download_method: git_clone
+  raw_path: 01_raw_data/GenImage/
+  output_path: 02_processed/isolation/license/image/GenImage/
+  license_type: CC-BY-NC-SA-4.0 + dataset_terms
+  commercial_use: forbidden
+  redistribution: restricted
+  derivative_obligation: non_commercial+share_alike
+  cleaning_rules:
+    min_short_edge: 224
+    remove_corrupted: true
+    remove_near_solid: true
+
+DFDC:
+  type: video
+  category: video
+  raw_path: 01_raw_data/DFDC/
+  output_path: 02_processed/isolation/license/video/DFDC/
+  commercial_use: unknown
+  redistribution: forbidden
+  cleaning_rules:
+    min_duration_sec: 3
+    min_short_edge: 224
+
+FaceForensics++:
+  type: video
+  category: video
+  raw_path: 01_raw_data/FaceForensics++/
+  output_path: 02_processed/isolation/license/video/FaceForensics++/
+  commercial_use: forbidden
+  redistribution: restricted
+  cleaning_rules:
+    min_duration_sec: 3
+    min_short_edge: 224
+
+Celeb-DF:
+  type: video
+  category: video
+  raw_path: 01_raw_data/Celeb-DF/
+  output_path: 02_processed/isolation/license/video/Celeb-DF/
+  commercial_use: forbidden
+  redistribution: forbidden
+  cleaning_rules:
+    min_duration_sec: 3
+    min_short_edge: 224
+
+FakeAVCeleb:
+  type: video
+  category: video
+  raw_path: 01_raw_data/FakeAVCeleb/
+  output_path: 02_processed/isolation/license/video/FakeAVCeleb/
+  commercial_use: forbidden
+  redistribution: forbidden
+  cleaning_rules:
+    min_duration_sec: 3
+    min_short_edge: 224
+
+DeeperForensics-1.0:
+  type: video
+  category: video
+  raw_path: 01_raw_data/DeeperForensics-1.0/
+  output_path: 02_processed/isolation/license/video/DeeperForensics-1.0/
+  commercial_use: forbidden
+  cleaning_rules:
+    min_duration_sec: 3
+    min_short_edge: 224
