@@ -76,3 +76,31 @@
 替代实际格式转换与验证所需的本地运行环境
 ## 仓库适配说明
 本仓库是在原始脚本设计文档基础上整理形成的结构化实现骨架。原文中配置文件写作 config/datasets_config.json，为便于展示与维护，仓库中采用 config/datasets_config.yaml 进行适配保存。部分分流路径与目录映射属于基于文档流程整理后的仓库实现表达，并非声称对原始脚本文件进行逐字复刻。
+
+当前阶段的重点不是直接产出最终标准测试集，而是对首批核心公开数据集进行统一接入、格式标准化、自动化清洗、许可分流、抽样复核和基础统计分析，判断其是否具备进入基础数据集池或候选池的条件。
+
+## Stage Scope本阶段覆盖的公开数据集包括：
+
+- HC3：文本数据集- GenImage：图像数据集- DFDC：视频数据集- FaceForensics++：视频数据集- Celeb-DF：视频数据集- FakeAVCeleb：音视频/视频数据集- DeeperForensics-1.0：视频数据集需要说明的是，纳入处理范围不等同于纳入基础候选池。数据集是否进入候选池，需要结合标准化结果、自动化清洗结果、抽样复核结果、许可状态和数据集级综合判断确定。
+
+## Current Validation Result当前批次结果显示：
+
+| Dataset | Modality | Sample Count | Current Status | Candidate Pool |
+|---|---:|---:|---|---|
+| HC3 | Text |400 | kept | Yes |
+| GenImage | Image |10000 | isolated_license / metadata_only | No |
+| DFDC | Video |10000 | isolated_license / metadata_only | No |
+| DeeperForensics-1.0 | Video |10000 | isolated_license / metadata_only | No |
+| FaceForensics++ | Video | pending | pending / metadata_only | No |
+| Celeb-DF | Video | pending | pending / metadata_only | No |
+| FakeAVCeleb | Audio-Video / Video | pending | pending / metadata_only | No |
+
+HC3 已完成标准化、自动化清洗和5% 抽样复核，标注准确率为95%，达到当前阶段90% 的候选池准入参考阈值。
+
+视觉类和音视频类数据集因许可、授权或公开分发限制，在当前公开仓库阶段主要保留元数据、来源记录和处理状态，不直接上传或分发原始样本。
+
+## Repository Structure```text00_docs/ Project reports and documentation01_raw_data/ Raw data source records and access notes02_standardized_data/ Standard schema and standardized metadata design03_quality_validation/ Dataset-level quality validation summaries04_sampling_review/ Sampling review protocol and review records05_statistics/ Statistical summaries and analysis tables06_script/ Scripts or script descriptions07_outputs/ Output tables, figures, and stage deliverables```
+
+## Main Stage Outputs-公开数据集质量验证报告- 数据集状态汇总表- 标准化元数据字段说明- 自动化质量验证规则说明- 抽样复核协议与记录模板- 基础候选池与隔离池状态记录## Important NotesDue to dataset size, license restrictions, and redistribution limitations, this repository does not directly redistribute restricted raw datasets. For restricted or unclear-license datasets, the repository only keeps metadata, source information, validation status, and processing records.
+
+标准化完成不代表质量验证通过；质量验证通过也不代表最终测试集已经形成。当前仓库记录的是第二阶段公开数据集质量验证成果。
