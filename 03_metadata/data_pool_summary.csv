@@ -1,0 +1,7 @@
+isolated_pool,GenImage,image,10000,isolated_license / metadata_only,no,"因许可、授权或公开分发限制触发合规隔离。"
+isolated_pool,DFDC,video,10000,isolated_license / metadata_only,no,"因许可、授权或公开分发限制触发合规隔离。"
+isolated_pool,DeeperForensics-1.0,video,10000,isolated_license / metadata_only,no,"因许可、授权或公开分发限制触发合规隔离。"
+pending_or_metadata_pool,FaceForensics++,video,pending,pending / metadata_only,no,"需进一步确认许可、授权和样本可用性。"
+pending_or_metadata_pool,Celeb-DF,video,pending,pending / metadata_only,no,"需进一步确认许可、授权和样本可用性。"
+pending_or_metadata_pool,FakeAVCeleb,audio_video,pending,pending / metadata_only,no,"需进一步确认许可、授权和样本可用性。"
+pending_collection_pool,compliant_alternative_data,image_video_audio_video,-,pending_collection,pending,"后续通过授权数据、宽松协议数据或内部生成数据补充。"
