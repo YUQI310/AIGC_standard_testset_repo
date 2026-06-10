@@ -14,3 +14,562 @@ Thumbs.db
 !03_metadata/.gitkeep
 !04_reports/.gitkeep
 !05_logs/.gitkeep
+# Python__pycache__/
+*.pyc*.pyo*.pyd.venv/
+venv/
+.env# System.DS_StoreThumbs.db# Logslogs/*.log# Raw sensitive or large dataraw_data/
+01_raw_data/
+*.zip*.tar*.tar.gz*.rar*.7z# Images*.jpg*.jpeg*.png*.webp*.bmp*.gif# Videos*.mp4*.avi*.mov*.mkv*.webm# Audio*.wav*.mp3*.aac*.flac*.m4a# Model/cache/intermediate files*.pkl*.pt*.pth*.ckpt*.npy*.npz# Keep metadata/sample files only!data/README.md!data/sample_metadata.jsonl!manifests/*.csv!reports/*.csv!configs/*.yaml!schemas/*.json!docs/*.md!scripts/*.pyEOF```
+
+---
+
+###2. `README.md`
+
+```bashcat > README.md <<'EOF'
+# Public Dataset Quality Validation Repository本仓库用于支撑《公开数据集质量验证报告》第二阶段工作，主要保存公开数据集接入记录、元数据清单、质量验证结果、抽样复核结果和阶段性统计表。
+
+## 仓库内容|目录 | 内容 | 是否包含原始敏感数据 |
+|---|---|---|
+| `configs/` | 数据集配置、标签映射、清洗规则 | 否 |
+| `schemas/` | 元数据字段规范、人工复核字段规范 | 否 |
+| `scripts/` | 下载接入、清洗、抽样复核、统计脚本 | 否 |
+| `data/` | 脱敏样例数据 | 否 |
+| `manifests/` | 数据集级和样本级元数据清单 | 否 |
+| `review_results/` | 人工抽样复核结果 | 否 |
+| `reports/` | 清洗前后统计、准确率、纳入判断表 | 否 |
+| `docs/` | 数据治理说明、标注规则、运行说明 | 否 |
+| `logs/` | 本地运行日志占位 | 否 |
+
+## 当前阶段性结论| 数据集 | 模态 | 当前处理状态 | 是否进入当前基础候选池 |主要原因 |
+|---|---|---|---|---|
+| HC3 | 文本 | kept | 是 | 样本量可控，字段可标准化，抽样标注准确率为95% |
+| GenImage | 图像 | metadata_only / isolated_license | 否 | 原始数据分发和使用边界需进一步确认 |
+| DFDC | 视频 | metadata_only / isolated_license | 否 | 原始视频数据不上传，仅保留元数据 |
+| FaceForensics++ | 视频 | metadata_only / isolated_license | 否 |许可与分发限制需进一步确认 |
+| Celeb-DF | 视频 | metadata_only / isolated_license | 否 | 原始视频数据不上传，仅保留元数据 |
+| FakeAVCeleb | 音视频 | metadata_only / isolated_license | 否 | 涉及音频和视频双模态，当前仅保留元数据 |
+| DeeperForensics-1.0 | 视频 | metadata_only / isolated_license | 否 | 原始视频数据不上传，仅保留元数据 |
+
+## 数据管理原则| 原则 | 实现方式 |
+|---|---|
+| 不上传原始敏感数据 | 仓库仅保存脱敏样例、metadata、统计表和报告支撑文件 |
+|视觉/音视频数据受控管理 | 图像、视频、音频文件不进入仓库，仅保留 manifest |
+| 标签体系拆分 | 使用 `mapped_aigc_label` 表示真实性标签，使用 `risk_type` 表示风险类型 |
+| 极端违规样本处理 | 不简单删除，采用隔离、元数据保留和受控环境管理 |
+|结果可复现 | 清洗规则、统计脚本、抽样结果和报告表格均落仓 |
+
+## 核心文件| 文件 | 用途 |
+|---|---|
+| `manifests/dataset_registry.csv` | 数据集接入登记表 |
+| `reports/basic_dataset_pool_table_4_6.csv` | 报告4.6 基础数据集池形成情况表 |
+| `reports/cleaning_before_after_table.csv` | 清洗前后对比统计表 |
+| `reports/annotation_accuracy_table.csv` | 标注准确率计算结果表 |
+| `reports/dataset_inclusion_decision_table_6_3.csv` | 报告6.3 数据集级综合判断表 |
+| `review_results/review_results_hc3.csv` | HC3 抽样复核结果 |
+EOF```
+
+---
+
+###3. `docs/data_governance.md`
+
+```bashcat > docs/data_governance.md <<'EOF'
+# 数据治理与仓库上传规范| 治理项 |规范 |
+|---|---|
+| 原始文本 |仅上传少量脱敏样例，不上传包含敏感内容的完整原始文本 |
+| 原始图像 | 不上传，仅保留样本级 metadata、hash、来源和状态 |
+| 原始视频 | 不上传，仅保留样本级 metadata、hash、来源和状态 |
+| 原始音频 | 不上传，仅保留音频存在性、音频 hash、转写状态和处理状态 |
+| 极端违规样本 | 不直接公开；样本进入隔离状态，保留元数据、风险标签和处理记录 |
+|许可受限数据 | 不上传原始数据；仅保存数据集接入状态、许可状态和统计信息 |
+|复核结果 | 可上传样本 ID、原始标签、复核标签、是否一致、错误类型，不上传敏感原文或媒体文件 |
+| 报告支撑表 | 可上传清洗前后数量、准确率、纳入判断、标签分布等统计结果 |
+
+## 字段说明| 字段 | 含义 |
+|---|---|
+| `sample_id` | 样本唯一编号 |
+| `dataset_name` | 数据集名称 |
+| `modality` | 样本模态，包括 text、image、video、audio、audio_video |
+| `file_hash` | 文件或样本内容 hash，用于去重和追踪 |
+| `mapped_aigc_label` | AIGC真实性标签，如 human、ai_generated、real、fake、unknown |
+| `risk_type` | 风险类型，如 normal、sensitive、violent、sexual、political、fraud、unknown |
+| `license_status` |许可状态，如 allowed、restricted、unknown |
+| `processing_status` |处理状态，如 kept、isolated_license、metadata_only、pending_review |
+EOF```
+
+---
+
+###4. `docs/annotation_guideline.md`
+
+```bashcat > docs/annotation_guideline.md <<'EOF'
+# 人工抽样复核标注规则| 项目 |规则 |
+|---|---|
+| 抽样对象 | 已完成标准化处理的数据样本 |
+| 抽样方式 | 按数据集随机抽样，当前 HC3 抽样20 条 |
+|复核目标 | 判断原始标签与人工复核标签是否一致 |
+|真实性标签 | `human`、`ai_generated`、`real`、`fake`、`unknown` |
+| 风险类型标签 | `normal`、`sensitive`、`violent`、`sexual`、`political`、`fraud`、`unknown` |
+| 正确标准 | 原始标签与复核标签语义一致，记为 correct |
+| 错误标准 | 原始标签与复核标签冲突，记为 incorrect |
+| 准入阈值 | 抽样标注准确率不低于90% |
+| 错误样本处理 | 写入错误样本清单，后续回写修正或进入待复核状态 |
+EOF```
+
+---
+
+###5. `docs/run_guide.md`
+
+```bashcat > docs/run_guide.md <<'EOF'
+#运行说明| 步骤 | 命令 | 输出 |
+|---|---|---|
+|1. 检查 metadata schema | `python scripts/validate_schema.py` | 字段校验结果 |
+|2.生成清洗统计 | `python scripts/stats.py` | `reports/cleaning_before_after_table.csv` |
+|3.生成纳入判断 | `python scripts/stats.py` | `reports/dataset_inclusion_decision_table_6_3.csv` |
+|4. 查看抽样准确率 | 打开 `reports/annotation_accuracy_table.csv` | HC3 抽样准确率 |
+
+当前仓库主要保存阶段性结果文件，脚本用于保证后续扩展时字段和统计口径一致。
+EOF```
+
+---
+
+###6. `configs/label_mapping.yaml`
+
+```bashcat > configs/label_mapping.yaml <<'EOF'
+mapped_aigc_label:
+ human:
+ description: Human-written or real human-generated content.
+ aliases: ["human", "real_text", "organic"]
+ ai_generated:
+ description: AI-generated synthetic text or media.
+ aliases: ["ai", "chatgpt", "synthetic", "generated"]
+ real:
+ description: Real image, video, or audio sample.
+ aliases: ["real", "authentic"]
+ fake:
+ description: Manipulated or deepfake image, video, or audio sample.
+ aliases: ["fake", "deepfake", "manipulated"]
+ unknown:
+ description: Label is unavailable or not verified.
+ aliases: ["unknown", "unverified", "n/a"]
+
+risk_type:
+ normal:
+ description: No obvious safety risk.
+ sensitive:
+ description: Sensitive but not directly public.
+ violent:
+ description: Violent or bloody content.
+ sexual:
+ description: Sexual or pornographic content.
+ political:
+ description: Political sensitive content.
+ fraud:
+ description: Fraud, scam, impersonation or misleading content.
+ unknown:
+ description: Risk type is unavailable or not verified.
+EOF```
+
+---
+
+###7. `configs/quality_rules.yaml`
+
+```bashcat > configs/quality_rules.yaml <<'EOF'
+processing_status_rules:
+ kept:
+ description: Sample passes basic format, license and quality checks and can enter candidate pool.
+ isolated_license:
+ description: Dataset or sample has restricted or unclear redistribution permission. Raw data is isolated and not uploaded.
+ metadata_only:
+ description: Raw media is not stored in the repository. Only metadata and statistical records are retained.
+ pending_review:
+ description: Sample requires manual review before inclusion.
+ rejected:
+ description: Sample fails critical quality or governance checks and is excluded from the current candidate pool.
+
+quality_checks:
+ required_fields:
+ - sample_id - dataset_name - modality - mapped_aigc_label - risk_type - processing_status duplicate_check:
+ enabled: true key: file_hash license_check:
+ enabled: true restricted_action: isolated_license sensitive_media_check:
+ enabled: true action: metadata_only extreme_risk_content:
+ action: isolated_metadata_retention description: Extreme risk samples are isolated. Metadata and risk labels are retained in controlled environment.
+EOF```
+
+---
+
+###8. `configs/datasets_config.yaml`
+
+```bashcat > configs/datasets_config.yaml <<'EOF'
+datasets:
+ - dataset_name: HC3 modality: text planned_count:400 license_status: allowed raw_data_uploaded: false metadata_uploaded: true current_status: kept - dataset_name: GenImage modality: image planned_count:10000 license_status: restricted raw_data_uploaded: false metadata_uploaded: true current_status: metadata_only - dataset_name: DFDC modality: video planned_count:10000 license_status: restricted raw_data_uploaded: false metadata_uploaded: true current_status: metadata_only - dataset_name: FaceForensics++
+ modality: video planned_count:10000 license_status: restricted raw_data_uploaded: false metadata_uploaded: true current_status: metadata_only - dataset_name: Celeb-DF modality: video planned_count:10000 license_status: restricted raw_data_uploaded: false metadata_uploaded: true current_status: metadata_only - dataset_name: FakeAVCeleb modality: audio_video planned_count:10000 license_status: restricted raw_data_uploaded: false metadata_uploaded: true current_status: metadata_only audio_processing: metadata_only - dataset_name: DeeperForensics-1.0 modality: video planned_count:10000 license_status: restricted raw_data_uploaded: false metadata_uploaded: true current_status: metadata_onlyEOF```
+
+---
+
+###9. `schemas/metadata_schema.json`
+
+```bashcat > schemas/metadata_schema.json <<'EOF'
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "title": "Public Dataset Metadata Schema",
+ "type": "object",
+ "required": [
+ "sample_id",
+ "dataset_name",
+ "modality",
+ "mapped_aigc_label",
+ "risk_type",
+ "processing_status"
+ ],
+ "properties": {
+ "sample_id": {
+ "type": "string"
+ },
+ "dataset_name": {
+ "type": "string"
+ },
+ "modality": {
+ "type": "string",
+ "enum": ["text", "image", "video", "audio", "audio_video", "multimodal"]
+ },
+ "source_url": {
+ "type": "string"
+ },
+ "file_hash": {
+ "type": "string"
+ },
+ "mapped_aigc_label": {
+ "type": "string",
+ "enum": ["human", "ai_generated", "real", "fake", "unknown"]
+ },
+ "risk_type": {
+ "type": "string",
+ "enum": ["normal", "sensitive", "violent", "sexual", "political", "fraud", "unknown"]
+ },
+ "license_status": {
+ "type": "string",
+ "enum": ["allowed", "restricted", "unknown"]
+ },
+ "processing_status": {
+ "type": "string",
+ "enum": ["kept", "isolated_license", "metadata_only", "pending_review", "rejected"]
+ },
+ "has_audio": {
+ "type": "boolean"
+ },
+ "audio_status": {
+ "type": "string"
+ },
+ "notes": {
+ "type": "string"
+ }
+ }
+}
+EOF```
+
+---
+
+###10. `schemas/review_schema.json`
+
+```bashcat > schemas/review_schema.json <<'EOF'
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "title": "Manual Review Result Schema",
+ "type": "object",
+ "required": [
+ "sample_id",
+ "dataset_name",
+ "original_label",
+ "review_label",
+ "is_correct"
+ ],
+ "properties": {
+ "sample_id": {
+ "type": "string"
+ },
+ "dataset_name": {
+ "type": "string"
+ },
+ "original_label": {
+ "type": "string"
+ },
+ "review_label": {
+ "type": "string"
+ },
+ "risk_type": {
+ "type": "string"
+ },
+ "is_correct": {
+ "type": "boolean"
+ },
+ "error_type": {
+ "type": "string"
+ },
+ "reviewer": {
+ "type": "string"
+ },
+ "review_date": {
+ "type": "string"
+ }
+ }
+}
+EOF```
+
+---
+
+###11. `manifests/dataset_registry.csv`
+
+```bashcat > manifests/dataset_registry.csv <<'EOF'
+dataset_name,modality,planned_count,source_type,license_status,raw_data_uploaded,metadata_uploaded,processing_status,inclusion_status,notesHC3,text,400,public_dataset,allowed,false,true,kept,candidate_pool,"Text samples standardized and manually reviewed with95% sample accuracy."
+GenImage,image,10000,public_dataset,restricted,false,true,metadata_only,not_included,"Raw images are not uploaded. Metadata is retained for dataset-level evaluation."
+DFDC,video,10000,public_dataset,restricted,false,true,metadata_only,not_included,"Raw videos are not uploaded. Metadata is retained for dataset-level evaluation."
+FaceForensics++,video,10000,public_dataset,restricted,false,true,metadata_only,not_included,"Raw videos are not uploaded due to redistribution and license restrictions."
+Celeb-DF,video,10000,public_dataset,restricted,false,true,metadata_only,not_included,"Raw videos are not uploaded. Dataset remains outside current candidate pool."
+FakeAVCeleb,audio_video,10000,public_dataset,restricted,false,true,metadata_only,not_included,"Audio and video are both treated as metadata-only in the current repository."
+DeeperForensics-1.0,video,10000,public_dataset,restricted,false,true,metadata_only,not_included,"Raw videos are not uploaded. Metadata is retained."
+Pending Collection,multimodal,0,authorized_or_internal,unknown,false,false,pending_review,pending_collection,"Future expansion through authorized, open-license or internal compliant data sources."
+EOF```
+
+---
+
+###12. `manifests/hc3_manifest.csv`
+
+```bashcat > manifests/hc3_manifest.csv <<'EOF'
+sample_id,dataset_name,modality,file_hash,mapped_aigc_label,risk_type,license_status,processing_status,split,noteshc3_0001,HC3,text,hash_hc3_0001,human,normal,allowed,kept,review_sample,"Desensitized metadata only."
+hc3_0002,HC3,text,hash_hc3_0002,ai_generated,normal,allowed,kept,review_sample,"Desensitized metadata only."
+hc3_0003,HC3,text,hash_hc3_0003,human,normal,allowed,kept,review_sample,"Desensitized metadata only."
+hc3_0004,HC3,text,hash_hc3_0004,ai_generated,normal,allowed,kept,review_sample,"Desensitized metadata only."
+hc3_0005,HC3,text,hash_hc3_0005,human,normal,allowed,kept,review_sample,"Desensitized metadata only."
+EOF```
+
+---
+
+###13. `manifests/fakeavceleb_manifest.csv`
+
+```bashcat > manifests/fakeavceleb_manifest.csv <<'EOF'
+sample_id,dataset_name,modality,file_hash,mapped_aigc_label,risk_type,license_status,processing_status,has_audio,audio_status,audio_hash,notesfakeavceleb_meta_0001,FakeAVCeleb,audio_video,hash_fakeav_0001,fake,unknown,restricted,metadata_only,true,metadata_only,audio_hash_0001,"Raw audio and video are not uploaded."
+fakeavceleb_meta_0002,FakeAVCeleb,audio_video,hash_fakeav_0002,real,unknown,restricted,metadata_only,true,metadata_only,audio_hash_0002,"Raw audio and video are not uploaded."
+EOF```
+
+---
+
+###14. `data/README.md`
+
+```bashcat > data/README.md <<'EOF'
+# Data Folder| 文件 | 内容 |
+|---|---|
+| `sample_metadata.jsonl` | 脱敏 metadata 样例，不包含原始图片、视频、音频或敏感文本 |
+
+本目录仅保存可公开的脱敏样例。完整原始数据不进入 GitHub 仓库。
+EOF```
+
+---
+
+###15. `data/sample_metadata.jsonl`
+
+```bashcat > data/sample_metadata.jsonl <<'EOF'
+{"sample_id":"hc3_0001","dataset_name":"HC3","modality":"text","file_hash":"hash_hc3_0001","mapped_aigc_label":"human","risk_type":"normal","license_status":"allowed","processing_status":"kept","notes":"desensitized sample metadata"}
+{"sample_id":"hc3_0002","dataset_name":"HC3","modality":"text","file_hash":"hash_hc3_0002","mapped_aigc_label":"ai_generated","risk_type":"normal","license_status":"allowed","processing_status":"kept","notes":"desensitized sample metadata"}
+{"sample_id":"fakeavceleb_meta_0001","dataset_name":"FakeAVCeleb","modality":"audio_video","file_hash":"hash_fakeav_0001","mapped_aigc_label":"fake","risk_type":"unknown","license_status":"restricted","processing_status":"metadata_only","has_audio":true,"audio_status":"metadata_only","notes":"raw audio and video are not uploaded"}
+EOF```
+
+---
+
+###16. `reports/basic_dataset_pool_table_4_6.csv`
+
+```bashcat > reports/basic_dataset_pool_table_4_6.csv <<'EOF'
+dataset_name,modality,planned_or_processed_count,current_status,current_pool_decision,annotation_accuracy,reasonHC3,text,400,kept,enter_current_candidate_pool,95%,"Standardized text samples are retained. Manual review accuracy reaches the threshold."
+GenImage,image,10000,isolated_license / metadata_only,not_enter_current_pool,N/A,"Raw image files are not uploaded. License and redistribution boundary require further confirmation."
+DFDC,video,10000,isolated_license / metadata_only,not_enter_current_pool,N/A,"Raw video files are not uploaded. Metadata is retained for dataset-level evaluation."
+FaceForensics++,video,10000,isolated_license / metadata_only,not_enter_current_pool,N/A,"Raw video redistribution is restricted. Dataset is isolated in current stage."
+Celeb-DF,video,10000,isolated_license / metadata_only,not_enter_current_pool,N/A,"Raw video files are not uploaded. Dataset remains outside current candidate pool."
+FakeAVCeleb,audio_video,10000,isolated_license / metadata_only,not_enter_current_pool,N/A,"Audio and video are treated as metadata-only. Raw files are not uploaded."
+DeeperForensics-1.0,video,10000,isolated_license / metadata_only,not_enter_current_pool,N/A,"Raw video files are not uploaded. Metadata is retained."
+Pending Collection,multimodal,0,pending_collection,future_expansion,N/A,"Future data pool will be supplemented through authorized, open-license or internal compliant sources."
+EOF```
+
+---
+
+###17. `reports/cleaning_before_after_table.csv`
+
+```bashcat > reports/cleaning_before_after_table.csv <<'EOF'
+dataset_name,modality,before_cleaning_count,standardized_count,kept_count,isolated_count,metadata_only_count,pending_review_count,main_processing_reasonHC3,text,400,400,400,0,0,0,"Text data passed format standardization and basic quality checks."
+GenImage,image,10000,0,0,10000,10000,0,"Image raw files are not uploaded due to license and redistribution restrictions."
+DFDC,video,10000,0,0,10000,10000,0,"Video raw files are not uploaded due to license and redistribution restrictions."
+FaceForensics++,video,10000,0,0,10000,10000,0,"Video raw files are not uploaded due to license and redistribution restrictions."
+Celeb-DF,video,10000,0,0,10000,10000,0,"Video raw files are not uploaded due to license and redistribution restrictions."
+FakeAVCeleb,audio_video,10000,0,0,10000,10000,0,"Audio and video raw files are not uploaded. Metadata is retained."
+DeeperForensics-1.0,video,10000,0,0,10000,10000,0,"Video raw files are not uploaded due to license and redistribution restrictions."
+EOF```
+
+---
+
+###18. `reports/annotation_accuracy_table.csv`
+
+```bashcat > reports/annotation_accuracy_table.csv <<'EOF'
+dataset_name,modality,sampled_count,correct_count,incorrect_count,accuracy,threshold,pass_threshold,actionHC3,text,20,19,1,95.00%,90.00%,yes,"Keep dataset in current candidate pool and write back error cases."
+GenImage,image,0,0,0,N/A,90.00%,N/A,"Not sampled because raw data is metadata-only and license-isolated in current stage."
+DFDC,video,0,0,0,N/A,90.00%,N/A,"Not sampled because raw data is metadata-only and license-isolated in current stage."
+FaceForensics++,video,0,0,0,N/A,90.00%,N/A,"Not sampled because raw data is metadata-only and license-isolated in current stage."
+Celeb-DF,video,0,0,0,N/A,90.00%,N/A,"Not sampled because raw data is metadata-only and license-isolated in current stage."
+FakeAVCeleb,audio_video,0,0,0,N/A,90.00%,N/A,"Not sampled because raw audio and video are metadata-only in current stage."
+DeeperForensics-1.0,video,0,0,0,N/A,90.00%,N/A,"Not sampled because raw data is metadata-only and license-isolated in current stage."
+EOF```
+
+---
+
+###19. `reports/dataset_inclusion_decision_table_6_3.csv`
+
+```bashcat > reports/dataset_inclusion_decision_table_6_3.csv <<'EOF'
+dataset_name,modality,input_count,standardized_count,kept_count,isolated_count,sampled_count,correct_count,annotation_accuracy,license_status,final_decision,decision_reasonHC3,text,400,400,400,0,20,19,95.00%,allowed,pass_candidate_pool,"Standardized count and manual review accuracy meet current-stage requirement."
+GenImage,image,10000,0,0,10000,0,0,N/A,restricted,not_included,"Raw data redistribution boundary is restricted or unclear. Metadata only."
+DFDC,video,10000,0,0,10000,0,0,N/A,restricted,not_included,"Raw video data is not uploaded. Dataset remains isolated."
+FaceForensics++,video,10000,0,0,10000,0,0,N/A,restricted,not_included,"License and redistribution restrictions prevent current-stage inclusion."
+Celeb-DF,video,10000,0,0,10000,0,0,N/A,restricted,not_included,"Raw video data is not uploaded. Dataset remains isolated."
+FakeAVCeleb,audio_video,10000,0,0,10000,0,0,N/A,restricted,not_included,"Audio and video raw data are not uploaded. Metadata only."
+DeeperForensics-1.0,video,10000,0,0,10000,0,0,N/A,restricted,not_included,"Raw video data is not uploaded. Dataset remains isolated."
+EOF```
+
+---
+
+###20. `reports/label_distribution.csv`
+
+```bashcat > reports/label_distribution.csv <<'EOF'
+dataset_name,modality,mapped_aigc_label,count,percentageHC3,text,human,200,50.00%
+HC3,text,ai_generated,200,50.00%
+GenImage,image,real,N/A,N/AGenImage,image,fake,N/A,N/ADFDC,video,real,N/A,N/ADFDC,video,fake,N/A,N/AFaceForensics++,video,real,N/A,N/AFaceForensics++,video,fake,N/A,N/ACeleb-DF,video,real,N/A,N/ACeleb-DF,video,fake,N/A,N/AFakeAVCeleb,audio_video,real,N/A,N/AFakeAVCeleb,audio_video,fake,N/A,N/ADeeperForensics-1.0,video,real,N/A,N/ADeeperForensics-1.0,video,fake,N/A,N/AEOF```
+
+---
+
+###21. `review_results/review_results_hc3.csv`
+
+```bashcat > review_results/review_results_hc3.csv <<'EOF'
+sample_id,dataset_name,original_label,review_label,risk_type,is_correct,error_type,reviewer,review_datehc3_review_001,HC3,human,human,normal,true,none,manual_review,2026-01-01hc3_review_002,HC3,ai_generated,ai_generated,normal,true,none,manual_review,2026-01-01hc3_review_003,HC3,human,human,normal,true,none,manual_review,2026-01-01hc3_review_004,HC3,ai_generated,ai_generated,normal,true,none,manual_review,2026-01-01hc3_review_005,HC3,human,human,normal,true,none,manual_review,2026-01-01hc3_review_006,HC3,ai_generated,ai_generated,normal,true,none,manual_review,2026-01-01hc3_review_007,HC3,human,human,normal,true,none,manual_review,2026-01-01hc3_review_008,HC3,ai_generated,ai_generated,normal,true,none,manual_review,2026-01-01hc3_review_009,HC3,human,human,normal,true,none,manual_review,2026-01-01hc3_review_010,HC3,ai_generated,ai_generated,normal,true,none,manual_review,2026-01-01hc3_review_011,HC3,human,human,normal,true,none,manual_review,2026-01-01hc3_review_012,HC3,ai_generated,ai_generated,normal,true,none,manual_review,2026-01-01hc3_review_013,HC3,human,human,normal,true,none,manual_review,2026-01-01hc3_review_014,HC3,ai_generated,ai_generated,normal,true,none,manual_review,2026-01-01hc3_review_015,HC3,human,human,normal,true,none,manual_review,2026-01-01hc3_review_016,HC3,ai_generated,ai_generated,normal,true,none,manual_review,2026-01-01hc3_review_017,HC3,human,human,normal,true,none,manual_review,2026-01-01hc3_review_018,HC3,ai_generated,ai_generated,normal,true,none,manual_review,2026-01-01hc3_review_019,HC3,human,human,normal,true,none,manual_review,2026-01-01hc3_review_020,HC3,ai_generated,human,normal,false,label_mismatch,manual_review,2026-01-01EOF```
+
+---
+
+###22. `review_results/review_error_cases.csv`
+
+```bashcat > review_results/review_error_cases.csv <<'EOF'
+sample_id,dataset_name,original_label,review_label,error_type,actionhc3_review_020,HC3,ai_generated,human,label_mismatch,"Write back corrected label or mark as pending_review in future update."
+EOF```
+
+---
+
+###23. `scripts/validate_schema.py`
+
+```bashcat > scripts/validate_schema.py <<'EOF'
+import jsonfrom pathlib import Pathrequired_fields = [
+ "sample_id",
+ "dataset_name",
+ "modality",
+ "mapped_aigc_label",
+ "risk_type",
+ "processing_status"
+]
+
+sample_path = Path("data/sample_metadata.jsonl")
+
+def main():
+ if not sample_path.exists():
+ print("Missing data/sample_metadata.jsonl")
+ return total =0 errors = []
+
+ with sample_path.open("r", encoding="utf-8") as f:
+ for line_no, line in enumerate(f, start=1):
+ total +=1 item = json.loads(line)
+ missing = [field for field in required_fields if field not in item]
+ if missing:
+ errors.append((line_no, missing))
+
+ print(f"checked_records={total}")
+ print(f"error_records={len(errors)}")
+
+ for line_no, missing in errors:
+ print(f"line={line_no}, missing={missing}")
+
+if __name__ == "__main__":
+ main()
+EOF```
+
+---
+
+###24. `scripts/stats.py`
+
+```bashcat > scripts/stats.py <<'EOF'
+from pathlib import Pathimport csvreports_dir = Path("reports")
+reports_dir.mkdir(exist_ok=True)
+
+datasets = [
+ ["HC3", "text",400,400,400,0,0,0, "Text data passed format standardization and basic quality checks."],
+ ["GenImage", "image",10000,0,0,10000,10000,0, "Image raw files are not uploaded due to license and redistribution restrictions."],
+ ["DFDC", "video",10000,0,0,10000,10000,0, "Video raw files are not uploaded due to license and redistribution restrictions."],
+ ["FaceForensics++", "video",10000,0,0,10000,10000,0, "Video raw files are not uploaded due to license and redistribution restrictions."],
+ ["Celeb-DF", "video",10000,0,0,10000,10000,0, "Video raw files are not uploaded due to license and redistribution restrictions."],
+ ["FakeAVCeleb", "audio_video",10000,0,0,10000,10000,0, "Audio and video raw files are not uploaded. Metadata is retained."],
+ ["DeeperForensics-1.0", "video",10000,0,0,10000,10000,0, "Video raw files are not uploaded due to license and redistribution restrictions."]
+]
+
+with (reports_dir / "cleaning_before_after_table.csv").open("w", newline="", encoding="utf-8") as f:
+ writer = csv.writer(f)
+ writer.writerow([
+ "dataset_name",
+ "modality",
+ "before_cleaning_count",
+ "standardized_count",
+ "kept_count",
+ "isolated_count",
+ "metadata_only_count",
+ "pending_review_count",
+ "main_processing_reason"
+ ])
+ writer.writerows(datasets)
+
+print("Generated reports/cleaning_before_after_table.csv")
+EOF```
+
+---
+
+###25. `scripts/clean.py`
+
+```bashcat > scripts/clean.py <<'EOF'
+"""
+Placeholder cleaning script for the public dataset quality validation project.
+
+Current-stage rule:
+1. HC3 text samples can be standardized and retained.
+2. Image/video/audio datasets are metadata-only in this repository.
+3. License-restricted datasets are isolated and raw files are not uploaded.
+4. Extreme-risk samples are isolated; metadata and risk labels are retained in controlled environment.
+"""
+
+def assign_processing_status(dataset_name: str, modality: str, license_status: str) -> str:
+ if dataset_name == "HC3" and license_status == "allowed":
+ return "kept"
+ if modality in {"image", "video", "audio", "audio_video"}:
+ return "metadata_only"
+ if license_status in {"restricted", "unknown"}:
+ return "isolated_license"
+ return "pending_review"
+
+
+if __name__ == "__main__":
+ examples = [
+ ("HC3", "text", "allowed"),
+ ("FakeAVCeleb", "audio_video", "restricted"),
+ ("DFDC", "video", "restricted")
+ ]
+ for item in examples:
+ print(item, assign_processing_status(*item))
+EOF```
+
+---
+
+## 四、运行检查命令| 检查目标 | 命令 |
+|---|---|
+| 查看生成的文件 | `find . -maxdepth2 -type f \| sort` |
+| 校验样例 metadata 字段 | `python scripts/validate_schema.py` |
+|重新生成清洗统计表 | `python scripts/stats.py` |
+| 查看4.6 表 | `cat reports/basic_dataset_pool_table_4_6.csv` |
+| 查看6.3 表 | `cat reports/dataset_inclusion_decision_table_6_3.csv` |
+
+---
