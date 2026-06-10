@@ -1,0 +1,91 @@
+ "schema_name": "aigc_standardized_metadata_schema",
+ "schema_version": "v1.0",
+ "description": "Unified sample-level metadata schema for AIGC content risk dataset quality validation.",
+ "fields": {
+ "sample_id": {
+ "type": "string",
+ "description": "Unique identifier for each sample."
+ },
+ "dataset_name": {
+ "type": "string",
+ "description": "Name of the source dataset, such as HC3, GenImage, DFDC, FaceForensics++, Celeb-DF, FakeAVCeleb, or DeeperForensics-1.0."
+ },
+ "modality": {
+ "type": "string",
+ "allowed_values": ["text", "image", "video", "audio_video"],
+ "description": "Data modality."
+ },
+ "raw_path": {
+ "type": "string",
+ "description": "Original file path or source path before standardization."
+ },
+ "normalized_path": {
+ "type": "string",
+ "description": "Standardized output path after format conversion."
+ },
+ "raw_label": {
+ "type": "string",
+ "description": "Original label provided by the source dataset."
+ },
+ "standard_label": {
+ "type": "string",
+ "description": "Mapped unified label after standardization."
+ },
+ "aigc_label": {
+ "type": "string",
+ "allowed_values": ["human", "ai_generated", "manipulated", "uncertain"],
+ "description": "Authenticity label for AIGC-related detection."
+ },
+ "risk_type": {
+ "type": "string",
+ "allowed_values": [
+ "misinformation",
+ "deepfake",
+ "copyright",
+ "impersonation",
+ "pornography",
+ "violence",
+ "none",
+ "unknown"
+ ],
+ "description": "Risk category label, separated from AIGC authenticity label."
+ },
+ "source_url": {
+ "type": "string",
+ "description": "Dataset homepage, official release page, or source URL."
+ },
+ "license_status": {
+ "type": "string",
+ "allowed_values": ["allowed", "restricted", "unknown"],
+ "description": "License status used for engineering-level compliance routing. This is not legal advice."
+ },
+ "record_status": {
+ "type": "string",
+ "allowed_values": [
+ "normalized",
+ "kept",
+ "isolated_quality",
+ "isolated_license",
+ "pending_review",
+ "failed_label_quality",
+ "dropped",
+ "metadata_only"
+ ],
+ "description": "Current processing status of the sample."
+ },
+ "quality_flags": {
+ "type": "array",
+ "items": "string",
+ "description": "Quality flags such as empty_text, corrupted_file, low_resolution, too_short_video, duplicate, near_duplicate, metadata_error, or license_restricted."
+ },
+ "review_status": {
+ "type": "string",
+ "allowed_values": ["not_sampled", "sampled_passed", "sampled_failed", "uncertain"],
+ "description": "Manual sampling review status."
+ },
+ "notes": {
+ "type": "string",
+ "description": "Additional processing notes."
+ }
+ }
+}
