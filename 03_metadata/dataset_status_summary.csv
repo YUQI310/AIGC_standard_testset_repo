@@ -1,0 +1,7 @@
+GenImage,image,10000,registered_or_standardized,isolated_by_license,not_applicable,-,isolated_license / metadata_only,no,"因许可、授权或公开分发限制触发合规隔离，不进入当前公开基础候选池。"
+DFDC,video,10000,registered_or_standardized,isolated_by_license,not_applicable,-,isolated_license / metadata_only,no,"因许可、授权或公开分发限制触发合规隔离，不进入当前公开基础候选池。"
+DeeperForensics-1.0,video,10000,registered_or_standardized,isolated_by_license,not_applicable,-,isolated_license / metadata_only,no,"因许可、授权或公开分发限制触发合规隔离，不进入当前公开基础候选池。"
+FaceForensics++,video,pending,registered_or_pending,pending_or_metadata_only,not_applicable,-,pending / metadata_only,no,"纳入处理范围，但当前未进入基础候选池，需进一步确认许可、授权和样本可用性。"
+Celeb-DF,video,pending,registered_or_pending,pending_or_metadata_only,not_applicable,-,pending / metadata_only,no,"纳入处理范围，但当前未进入基础候选池，需进一步确认许可、授权和样本可用性。"
+FakeAVCeleb,audio_video,pending,registered_or_pending,pending_or_metadata_only,not_applicable,-,pending / metadata_only,no,"纳入处理范围，但当前未进入基础候选池，需进一步确认许可、授权和样本可用性。"
+compliant_alternative_data,image_video_audio_video,-,pending_collection,pending,not_applicable,-,pending_collection,pending,"后续通过授权数据、宽松协议数据或内部生成数据补充图像、视频和音视频候选数据。"
