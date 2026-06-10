@@ -1,0 +1,4 @@
+AIGC 测试集准入结论报告
+DFDC: 隔离
+FaceForensics++: 隔离
+...
