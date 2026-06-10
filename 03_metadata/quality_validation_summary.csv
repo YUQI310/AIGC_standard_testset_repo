@@ -1,0 +1,7 @@
+empty_or_no_valid_content,-,-,-,"当前批次未单独统计该项数量，后续以脚本输出为准。"
+low_quality_sample,-,-,-,"当前批次未单独统计该项数量，后续以脚本输出为准。"
+duplicate_or_near_duplicate,-,-,-,"当前批次未单独统计该项数量，后续以脚本输出为准。"
+label_missing_or_metadata_error,-,-,-,"当前批次未单独统计该项数量，后续以脚本输出为准。"
+license_restricted,all_visual_data,over_99_percent,image_video,"当前批次视觉类数据集按项目合规配置被标记为 restricted 或 unknown，触发全量隔离，不进入公开基础数据池。"
+content_risk_prefilter_hit,-,-,-,"当前批次未单独统计该项数量，后续以脚本输出为准。"
+other,-,-,-,"其他原因待后续脚本日志和人工复核记录补充。"
