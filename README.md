@@ -10,49 +10,30 @@
 - 按许可状态与处理策略进行分流
 - 形成可复核、可审计的候选样本池
 
-## 当前支持的数据集
-- HC3（text）
-- GenImage（image）
-- DFDC（video）
-- FaceForensics++（video，许可隔离）
-- Celeb-DF（video，许可隔离）
-- FakeAVCeleb（video，许可隔离）
+当前数据池状态总览
+
+| 数据集 | 模态 | 样本数 | 当前状态 | 是否进入候选池 |
+|---|---|---|---|---|
+| HC3 | 文本 | 400 | kept |  是 |
+| GenImage | 图像 | 10,000 | isolated\_license |  否 |
+| DFDC | 视频 | 10,000 | isolated\_license |  否 |
+| FaceForensics++ | 视频 | 10,000 | isolated\_license | 否 |
+| Celeb-DF | 视频 | 10,000 | isolated\_license | 否 |
+| FakeAVCeleb | 视频/音视频 | 10,000 | isolated\_license | 否 |
+| DeeperForensics-1.0 | 视频 | 10,000 | isolated\_license | 否 |
+
+视觉模态数据集因许可、授权或公开分发限制触发合规隔离，以 `metadata_only` 形式保留处理记录，不进入公开基础数据池。后续将通过授权数据、宽松协议数据或内部生成数据补充。
 
 ## 处理流程
 配置读取 → 数据接入/原始归档 → 格式识别 → 标准化转换 → 元数据生成 → 基础质量校验 → 去重处理 → 内容风险预筛 → 许可合规分流 → 抽样复核清单生成 → 日志记录 → 结果导出
 
 ## 目录结构
-- `config/` 配置文件
-- `docs/` 设计与说明文档
-- `examples/` 示例输出
-- `src/` 核心脚本
-- `tests/` 测试文件
-- `01_raw_data/` 原始数据归档
-- `02_processed/` 处理结果与分流目录
-- `03_metadata/` 元数据输出
-- `04_reports/` 处理报告
-- `05_logs/` 运行日志
-
-## 处理后目录说明
-- `02_processed/normalized/` 已标准化，但不代表已准入
-- `02_processed/candidate_pool/` 满足候选池准入条件
-- `02_processed/pending_review/` 需人工复核
-- `02_processed/isolation/license/` 许可不明或不满足要求
-- `02_processed/isolation/compliance/` 内容风险隔离
-- `02_processed/isolation/corrupted/` 损坏或不可处理样本
-
-## 状态字段说明
-样本主状态 `record_status` 建议包括：
-- `ingested`
-- `normalized`
-- `validated`
-- `candidate_ready`
-- `pending_review`
-- `isolated_license`
-- `isolated_compliance`
-- `isolated_corrupted`
-- `rejected`
-- `sampled_for_label_review`
+AIGC_standard_testset_repo/ ├── 01_raw_data/ # 原始数据集存放目录（按数据集名称分子目录） ├── 02_processed/ # 标准化处理后的数据（JSONL/JPEG/MP4 + 元数据） ├── 03_metadata/ # 数据集注册表、数据池汇总文件 ├── 04_reports/ # 阶段性报告文档 ├── 05_logs/ # 脚本运行日志、清洗日志 ├── 06_scripts/ # 自动化处理脚本 ├── 07_statistics/ # 统计分析图表与汇总数据 ├── 08_outputs/ # 阶段产出文件（可交付物） ├── config/ # 配置文件（路径、规则、阈值） ├── docs/ # 使用文档、运行指南 ├── examples/ # 抽样复核记录示例 ├── review_logs/ # 人工标注复核记录 ├── src/ # 核心功能模块源码 ├── tests/ # 单元测试 ├── .gitignore └── README.md
+数据格式规范
+- 文本：`.jsonl`，每行一条样本
+- 图像：`.jpeg`
+- 视频：`.mp4`
+- 元数据字段：`data_id` · `content_type` · `source_model` · `label` · `source_dataset` · `risk_level` · `status`
   ## 当前进展
 当前仓库已完成以下内容：
 已建立仓库的基础目录结构
@@ -104,3 +85,9 @@ HC3 已完成标准化、自动化清洗和5% 抽样复核，标注准确率为9
 ## Main Stage Outputs-公开数据集质量验证报告- 数据集状态汇总表- 标准化元数据字段说明- 自动化质量验证规则说明- 抽样复核协议与记录模板- 基础候选池与隔离池状态记录## Important NotesDue to dataset size, license restrictions, and redistribution limitations, this repository does not directly redistribute restricted raw datasets. For restricted or unclear-license datasets, the repository only keeps metadata, source information, validation status, and processing records.
 
 标准化完成不代表质量验证通过；质量验证通过也不代表最终测试集已经形成。当前仓库记录的是第二阶段公开数据集质量验证成果。
+标注质量门槛
+
+本项目第二阶段将 90% 标注准确率作为数据集级准入参考阈值。  
+低于90%的数据集记为 `failed_label_quality`，不纳入当前阶段候选池。
+免责说明
+本仓库为实习项目数据管理仓库，不包含任何受版权保护的原始数据集内容。隔离状态的数据集仅保留元数据记录，原始文件不上传至公开仓库。
