@@ -1,0 +1,9 @@
+dataset_id,dataset_name,modality,sample_count,license_status,pool_status,is_in_candidate_pool,annotation_accuracy,processing_stage,notes
+DS001,HC3,text,400,open,kept,True,0.95,phase2_complete,已完成标准化、自动化清洗和5%抽样复核
+DS002,GenImage,image,10000,restricted,isolated_license,False,,phase2_isolated,因许可/授权或公开分发限制触发合规隔离
+DS003,DFDC,video,10000,restricted,isolated_license,False,,phase2_isolated,因许可/授权或公开分发限制触发合规隔离
+DS004,FaceForensics++,video,10000,restricted,isolated_license,False,,phase2_isolated,因许可/授权或公开分发限制触发合规隔离
+DS005,Celeb-DF,video,10000,restricted,isolated_license,False,,phase2_isolated,因许可/授权或公开分发限制触发合规隔离
+DS006,FakeAVCeleb,video/audio-video,10000,restricted,isolated_license,False,,phase2_isolated,因许可/授权或公开分发限制触发合规隔离
+DS007,DeeperForensics-1.0,video,10000,restricted,isolated_license,False,,phase2_isolated,因许可/授权或公开分发限制触发合规隔离
+DS008,compliant_replacement_data,image/video/audio-video,,unknown,pending_collection,False,,pending,后续通过授权数据、宽松协议数据或内部生成数据补充
