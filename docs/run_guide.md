@@ -205,3 +205,20 @@ review-result input files
 content risk model integration
 Label Studio interfaces
 then this document should be updated accordingly.
+
+## 标注质量准入阈值
+
+- 抽样比例：每个进入候选流程的数据集随机抽取 **5%** 样本
+- 准入阈值：标注准确率 **≥ 90%** 方可保留于候选池
+- 低于90%：记为 `failed_label_quality`，不纳入当前阶段候选池
+
+## 当前批次处理结果
+
+- HC3（文本）：400条，标注准确率 **95%**，状态 `kept`，已进入基础候选池
+- 视觉类数据集（图像/视频）：因许可限制全量隔离，状态 `isolated_license/metadata_only`
+
+## 注意事项
+
+- 隔离状态数据集的原始文件**不上传**至公开仓库，仅保留元数据记录
+- `review_logs/` 目录存放人工复核原始记录，不包含受版权保护的样本内容
+
