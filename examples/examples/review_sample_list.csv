@@ -1,3 +1,0 @@
-data_id,source_dataset,content_type,standard_label,record_status,review_status
-HC3_000001,HC3,text,ai_generated,pending_review,pending
-HC3_000002,HC3,text,human_written,pending_review,pending
