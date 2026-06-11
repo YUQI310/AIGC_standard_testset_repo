@@ -1,0 +1,7 @@
+dataset_name,modality,license_status,isolation_reason,source_url,download_status
+GenImage,image,isolated_license,商业许可限制，不可公开分发,https://github.com/GenImage-Dataset/GenImage,not_downloaded
+DFDC,video,isolated_license,Meta专项研究协议，限制再分发,https://ai.facebook.com/datasets/dfdc,not_downloaded
+FaceForensics++,video,isolated_license,需签署学术协议方可访问,https://github.com/ondyari/FaceForensics,not_downloaded
+Celeb-DF,video,isolated_license,仅限学术用途，禁止商业及公开分发,https://github.com/yuezunli/celeb-deepfakeforensics,not_downloaded
+FakeAVCeleb,video/audio,isolated_license,学术许可限制，不可公开分发,https://github.com/DASH-Lab/FakeAVCeleb,not_downloaded
+DeeperForensics-1.0,video,isolated_license,需申请访问权限，限制分发,https://github.com/EndlessSora/DeeperForensics-1.0,not_downloaded
