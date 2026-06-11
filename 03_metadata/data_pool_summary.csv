@@ -1,7 +1,9 @@
-isolated_pool,GenImage,image,10000,isolated_license / metadata_only,no,"因许可、授权或公开分发限制触发合规隔离。"
-isolated_pool,DFDC,video,10000,isolated_license / metadata_only,no,"因许可、授权或公开分发限制触发合规隔离。"
-isolated_pool,DeeperForensics-1.0,video,10000,isolated_license / metadata_only,no,"因许可、授权或公开分发限制触发合规隔离。"
-pending_or_metadata_pool,FaceForensics++,video,pending,pending / metadata_only,no,"需进一步确认许可、授权和样本可用性。"
-pending_or_metadata_pool,Celeb-DF,video,pending,pending / metadata_only,no,"需进一步确认许可、授权和样本可用性。"
-pending_or_metadata_pool,FakeAVCeleb,audio_video,pending,pending / metadata_only,no,"需进一步确认许可、授权和样本可用性。"
-pending_collection_pool,compliant_alternative_data,image_video_audio_video,-,pending_collection,pending,"后续通过授权数据、宽松协议数据或内部生成数据补充。"
+pool_type,dataset_name,modality,sample_count,status,in_candidate_pool,processing_notes
+candidate_pool,HC3,text,400,kept,True,已完成标准化、自动化清洗和5%抽样复核，标注准确率95%
+isolated_pool,GenImage,image,10000,isolated_license/metadata_only,False,因许可、授权或公开分发限制触发合规隔离
+isolated_pool,DFDC,video,10000,isolated_license/metadata_only,False,因许可、授权或公开分发限制触发合规隔离
+isolated_pool,FaceForensics++,video,10000,isolated_license/metadata_only,False,因许可、授权或公开分发限制触发合规隔离
+isolated_pool,Celeb-DF,video,10000,isolated_license/metadata_only,False,因许可、授权或公开分发限制触发合规隔离
+isolated_pool,FakeAVCeleb,video/audio-video,10000,isolated_license/metadata_only,False,因许可、授权或公开分发限制触发合规隔离
+isolated_pool,DeeperForensics-1.0,video,10000,isolated_license/metadata_only,False,因许可、授权或公开分发限制触发合规隔离
+pending_pool,compliant_replacement_data,image/video/audio-video,,pending_collection,False,后续通过授权数据、宽松协议数据或内部生成数据补充
