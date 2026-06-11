@@ -1,6 +1,6 @@
 sample_id,dataset_name,modality,original_label,mapped_label,reviewer_judgment,is_correct,error_type,correction,review_time,reviewer,notes
-HC3_sample_001,HC3,text,human,human,human,True,,,2025-07,YUQI310,
-HC3_sample_002,HC3,text,chatgpt,aigc,aigc,True,,,2025-07,YUQI310,
-HC3_sample_003,HC3,text,chatgpt,aigc,aigc,True,,,2025-07,YUQI310,
-HC3_sample_004,HC3,text,human,human,human,True,,,2025-07,YUQI310,
-HC3_sample_005,HC3,text,chatgpt,aigc,aigc,True,,,2025-07,YUQI310,
+HC3_sample_001,HC3,text,human,human,human,True,,,2026-06,YUQI310,
+HC3_sample_002,HC3,text,chatgpt,aigc,aigc,True,,,2026-06,YUQI310,
+HC3_sample_003,HC3,text,chatgpt,aigc,aigc,True,,,2026-06,YUQI310,
+HC3_sample_004,HC3,text,human,human,human,True,,,2026-06,YUQI310,
+HC3_sample_005,HC3,text,chatgpt,aigc,aigc,True,,,2026-06,YUQI310,
