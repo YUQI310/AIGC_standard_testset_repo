@@ -96,3 +96,26 @@ DeeperForensics-1.0:
   cleaning_rules:
     min_duration_sec: 3
     min_short_edge: 224
+    {
+  "DF-TIMIT": {
+    "batch_id": "20260601_batch_01",
+    "script_version": "1.0.0",
+    "source_dataset": "DF-TIMIT",
+    "raw_root": "01_raw/DF-TIMIT",
+    "subsets": ["higher_quality", "lower_quality"],
+    "file_pattern": "-video-fram1.avi",
+    "skip_patterns": ["-original.mov", "-roi93.mov", "fram1-original.mov"],
+    "content_type": "video",
+    "standard_label": "deepfake",
+    "aigc_label": "manipulated",
+    "risk_type": "deepfake",
+    "license_status": "restricted",
+    "record_status": "pending_review",
+    "references": [
+      "Korshunov, P. & Marcel, S. (2018). DeepFakes: a New Threat to Face Recognition? Assessment and Detection.",
+      "Sanderson, C. & Lovell, B.C. (2009). Multi-Region Probabilistic Histograms for Robust and Scalable Face Recognition."
+    ],
+    "notes": "DF-TIMIT restricted license. Not for commercial use. Review required before annotation."
+  }
+}
+
